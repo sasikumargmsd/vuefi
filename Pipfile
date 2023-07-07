@@ -6,6 +6,10 @@ name = "pypi"
 [packages]
 flask = "*"
 langchain = "*"
+pypdf = "*"
+openai = "*"
+chromadb = "*"
+tiktoken = "*"
 
 [dev-packages]
 

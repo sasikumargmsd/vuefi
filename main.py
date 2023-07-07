@@ -1,5 +1,6 @@
 import os 
-os.environ["OPENAI_API_KEY"] = "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"
+# os.environ["OPENAI_API_KEY"] = "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"
+os.environ["OPENAI_API_KEY"] = "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"
 
 import json
 from langchain.document_loaders import PyPDFLoader

@@ -11,7 +11,7 @@ from flask import Flask, jsonify, request
 app = Flask(__name__)
 
 @app.route('/parse_credit_report', methods=['POST'])
-def create_item():
+def parse_credit_report():
 	record = json.loads(request.data)
 	loader = PyPDFLoader(record['url'])
 	documents = loader.load()
@@ -23,9 +23,8 @@ def create_item():
 	return jsonify({"score": score.strip(), "enquiries":enquiries.strip()})
 
 @app.route('/check_eligibility', methods=['POST'])
-def create_item():
-
-
+def check_eligibility():
+	pass
 
 
 

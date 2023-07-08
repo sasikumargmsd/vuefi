@@ -43,13 +43,13 @@ def get_summary():
     # data = get_file_from_s3(job_id)
     data = parse_summary(summary=True)
     if "summary" in query.lower():
-        return jsonify({"Summary":data["Summary"]})
+        return jsonify({"type": "table", "data":{"Summary":data["Summary"]}})
     if "minimum" in query.lower():
-        return jsonify({"Monthly Data": data["Monthly Data"]})
+        return jsonify({"type": "key-value", "data":{"Monthly Data": data["Monthly Data"]}})
     if "abb" in query.lower():
-        return jsonify({"Average ABB for 3 months":data["Average ABB for 3 months"]})
+        return jsonify({"type": "key-value", "data":{"Average ABB for 3 months":data["Average ABB for 3 months"]}})
     if "current" in query.lower():
-        return jsonify({"Current Balance": data["Current Balance"]})
+        return jsonify({"type": "key-value", "data":{"Current Balance": data["Current Balance"]}})
 
 # def get_file_from_s3(job_id="000d1e0a-06c8-4fd6-a834-2e3fba2a2eb7"):
 #     bucket_name = "idp-data-staging"

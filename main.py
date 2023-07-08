@@ -35,13 +35,29 @@ def is_eligible():
     data = parse_summary()
     return jsonify(check_eligibility(data,cibil))
 
-def get_file_from_s3(job_id="000d1e0a-06c8-4fd6-a834-2e3fba2a2eb7"):
-    bucket_name = "idp-data-staging"
-    path = f"file_uploads/worfkflow=548/job={job_id}/summary.json"
-    s3resource = boto3.resource('s3')
-    content_object = s3resource.Object(bucket_name, path)
-    file_content = content_object.get()['Body'].read()
-    return json.loads(file_content)
+@app.route('/summary', methods=['POST'])
+def get_summary():
+    payload = json.loads(request.data)
+    job_id = payload['job_id']
+    query = payload['query']
+    # data = get_file_from_s3(job_id)
+    data = parse_summary(summary=True)
+    if "summary" in query.lower():
+        return jsonify({"Summary":data["Summary"]})
+    if "minimum" in query.lower():
+        return jsonify({"Monthly Data": data["Monthly Data"]})
+    if "abb" in query.lower():
+        return jsonify({"Average ABB for 3 months":data["Average ABB for 3 months"]})
+    if "current" in query.lower():
+        return jsonify({"Current Balance": data["Current Balance"]})
+
+# def get_file_from_s3(job_id="000d1e0a-06c8-4fd6-a834-2e3fba2a2eb7"):
+#     bucket_name = "idp-data-staging"
+#     path = f"file_uploads/worfkflow=548/job={job_id}/summary.json"
+#     s3resource = boto3.resource('s3')
+#     content_object = s3resource.Object(bucket_name, path)
+#     file_content = content_object.get()['Body'].read()
+#     return json.loads(file_content)
         
 def check_eligibility(finance_report, cibil):
     eligibility1 = input_data1 = [
@@ -107,7 +123,7 @@ def check_eligibility(finance_report, cibil):
         return eligibility1
 
 
-def parse_summary(path='./summary.json', data=None):
+def parse_summary(path='./summary.json', data=None, summary=False):
     if not data:
         f = open(path)
         data = json.load(f)
@@ -117,6 +133,8 @@ def parse_summary(path='./summary.json', data=None):
        "Average ABB for 3 months": "0",
        "Monthly Data": []
     }
+    if summary:
+        input_data["Summary"] = data['Summary']
 
     for sub_data in data['Summary']:
         if "data" in sub_data.keys() and type(sub_data['data']) is dict:

@@ -7,4 +7,4 @@ RUN pip3 install langchain
 RUN pip3 install flask
 COPY . .
 
-CMD ["python3", "main.py" , "--host=0.0.0.0", "--port=80"]
+CMD ["flask", "--app=main", "run" , "--host=0.0.0.0", "--port=80"]

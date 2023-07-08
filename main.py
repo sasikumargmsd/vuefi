@@ -135,7 +135,9 @@ def parse_summary(path='./summary.json', data=None, summary=False):
        "Monthly Data": []
     }
     if summary:
-        input_data["Summary"] = data['Summary']
+        for sub_data in data['Summary']:
+            if sub_data.get("label") == "Summary Table":
+                input_data["Summary"] = sub_data['data']
 
     for sub_data in data['Summary']:
         if "data" in sub_data.keys() and type(sub_data['data']) is dict:

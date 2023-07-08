@@ -44,7 +44,7 @@ def get_summary():
     # data = get_file_from_s3(job_id)
     data = parse_summary(summary=True)
     if "summary" in query.lower():
-        return jsonify({"type": "table", "data":{"Summary":data["Summary"]}})
+        return jsonify({"type": "table", "data":data["Summary"]})
     if "minimum" in query.lower():
         return jsonify({"type": "key-value", "data":{"Monthly Data": data["Monthly Data"]}})
     if "abb" in query.lower():

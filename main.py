@@ -33,7 +33,8 @@ def is_eligible():
     cibil = payload['cibil_report']
     # data = get_file_from_s3(job_id)
     data = parse_summary()
-    return jsonify(check_eligibility(data,cibil))
+    result = {"type": "table", "data":check_eligibility(data,cibil)}
+    return jsonify(result)
 
 @app.route('/summary', methods=['POST'])
 def get_summary():

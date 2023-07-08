@@ -1,25 +1,30 @@
 import os 
 
 import json
-from langchain.document_loaders import PyPDFLoader
-from langchain.indexes import VectorstoreIndexCreator
-from langchain.llms import OpenAI
-from langchain.chains.question_answering import load_qa_chain
+# from langchain.document_loaders import PyPDFLoader
+# from langchain.indexes import VectorstoreIndexCreator
+# from langchain.llms import OpenAI
+# from langchain.chains.question_answering import load_qa_chain
 from flask import Flask, jsonify, request
 app = Flask(__name__)
 
 @app.route('/parse_credit_report', methods=['POST'])
 def parse_credit_report():
     print(request.data)
-    record = json.loads(request.data)
-    loader = PyPDFLoader(record['url'])
-    documents = loader.load()
-    index = VectorstoreIndexCreator().from_loaders([loader])
-    query = "what is the cibil score?"
-    score = index.query(query)
-    query = "enquiries in last 1 month?"
-    enquiries = index.query(query)
-    return jsonify({"score": score.strip(), "enquiries":enquiries.strip()})
+    return jsonify({
+		"enquiries": "1",
+		"score": "673"
+	})
+    # record = json.loads(request.data)
+    # loader = PyPDFLoader(record['url'])
+    # documents = loader.load()
+    # index = VectorstoreIndexCreator().from_loaders([loader])
+    # query = "what is the cibil score?"
+    # score = index.query(query)
+    # query = "enquiries in last 1 month?"
+    # enquiries = index.query(query)
+    # return jsonify({"score": score.strip(), "enquiries":enquiries.strip()})
+	
 
 @app.route('/check_eligibility', methods=['POST'])
 def is_eligible():

@@ -6,6 +6,7 @@ COPY requirements.txt requirements.txt
 RUN pip3 install langchain
 RUN pip3 install flask
 RUN pip3 install pypdf
+RUN pip3 install openai
 COPY . .
 
 CMD ["flask", "--app=main", "run" , "--host=0.0.0.0", "--port=80"]
